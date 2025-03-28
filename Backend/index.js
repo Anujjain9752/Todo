@@ -43,3 +43,5 @@ app.use("/user", userRoute);
 app.listen(PORT, () => {    
     console.log(`Server is running on port  ${PORT}`);
 });
+
+// Showing how to commit after publishsing the project to github
