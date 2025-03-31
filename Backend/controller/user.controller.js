@@ -27,7 +27,7 @@ export const register = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ message: "User already registered" });
+      return res.status(400).json({ errors: "User already registered" });
     }
     
     const hashPassword = await bcrypt.hash(password, 10);
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
    const { email, password } = req.body;
     try {
       if(!email || !password){
-        return res.status(400).json({message:"All fields are required"});
+        return res.status(400).json({errors:"All fields are required"});
       } 
 
       const user = await User.findOne({email}).select("+password");

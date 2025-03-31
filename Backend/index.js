@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import todoRoute from './routes/todo.route.js';
 import userRoute from "./routes/user.route.js";
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -16,6 +17,7 @@ const DB_URI = process.env.MONGODB_URI;  // Database URI
 // middleware
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,

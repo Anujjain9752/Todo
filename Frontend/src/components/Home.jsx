@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
@@ -83,6 +85,21 @@ const Home = () => {
     }
   };
 
+  const navigateTo = useNavigate();
+  const logout = async () => {
+    try {
+      await axios.get("http://localhost:4001/user/logout",{
+        withCredentials: true,
+      });
+      toast.success("user logged out successfully");
+      navigateTo("/login");
+      localStorage.removeItem("jwt");
+     
+    } catch (error) {
+      toast.error("Error logging out");
+    }
+  };
+
   const remainingTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
@@ -106,11 +123,11 @@ const Home = () => {
       </div>
 
       {loading ? (
-        <div>
-          <span>..Loading</span>
+        <div className="text-center justify-center ">
+          <span className="text-gray-500">..Loading</span>
         </div>
       ) : error ? (
-        <div>{error}</div>
+        <div className="text-center text-red-500 font-semibold">{error}</div>
       ) : (
         <ul className="space-y-2 ">
           {todos.map((todo, index) => (
@@ -149,7 +166,10 @@ const Home = () => {
       <p className="mt-4 text-center text-sm text-gray-700">
         {remainingTodos} remaining Todos
       </p>
-      <button className="mt-6 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-800 duration-500 mx-auto block">
+      <button
+        onClick={() => logout()}
+        className="mt-6 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-800 duration-500 mx-auto block"
+      >
         Logout
       </button>
     </div>

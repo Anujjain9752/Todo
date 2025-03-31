@@ -11,6 +11,11 @@ const todoSchema = new mongoose.Schema({
    completed:{
     type: Boolean,
     required: true
+   },
+   user:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',   // Reference to the User model to connect to users collections in MongoDB
+      required: true
    }
 })
 

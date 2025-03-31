@@ -5,14 +5,15 @@ import {
   updateTodo,
 } from "../controller/todo.controller.js";
 import express from "express";
+import { authenticate } from "../middleware/authorize.js";
 const router = express.Router();
 
-router.post("/create", createTodo);
+router.post("/create", authenticate,  createTodo);
 
-router.get("/fetch", getTodos);
+router.get("/fetch",authenticate,  getTodos);
 
-router.put("/update/:id", updateTodo);
+router.put("/update/:id",authenticate,  updateTodo);
 
-router.delete("/delete/:id", deleteTodo);
+router.delete("/delete/:id",authenticate,  deleteTodo);
 
 export default router;

@@ -3,7 +3,9 @@ import Todo from '../model/todo.model.js';
 export const createTodo = async(req,res) => {
   const todo = new Todo({
     text: req.body.text,
-    completed: req.body.completed
+    completed: req.body.completed,
+    user: req.user._id,     // associate todo with logged-in user
+
   })
 
 
@@ -20,7 +22,7 @@ export const createTodo = async(req,res) => {
 
 export const getTodos = async(req,res) => {
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find({user: req.user._id});   //fetch todos for the logged-in user
     res.status(200).json({message: "Todos fetched successfully", todos});
   } catch (error) {
     console.log(error);
